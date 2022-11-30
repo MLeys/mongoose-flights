@@ -10,7 +10,7 @@
 	<h2>Add New Flight</h2>
 	<form action="/flights" method="POST">
 		<label>Airline:
-			<select name="airport">
+			<select name="airline">
                 <option value="American">American</option>
                 <option value="Delta">Delta</option>
                 <option value="Southwest">Southwest</option>
@@ -18,7 +18,7 @@
             </select>
 		</label><br>
         <label>Airport:
-            <select name="airline">
+            <select name="airport">
                 <option value="ATL">ATL</option>
                 <option value="DFW">DFW</option>
                 <option value="DEN">DEN</option>
@@ -30,7 +30,7 @@
             <input type="Number" name="flightNo">
         </label><br>
         <label>Departure Date
-            <input type="datetime-local" name="departs">
+            <input type="datetime-local" name="departs" value="flightNo">
         </label>
 
 		<input type="submit" value="Add Movie">
