@@ -9,11 +9,10 @@ const flightSchema = new Schema({
     departs: {
         type: Date,
         default: function() {
-            const today = new Date();
-            const todayPlusOneYear =today.setFullYear(date.getFullYear() + 1);
-            console.log(todayPlusOneYear, " <--------- NEW DATE=============");
-            todayPlusOneYear = todayPlusOneYear.toISOString().slice(0,16)
-            return todayPlusOneYear;
+            const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+            
+            return defaultDate.toISOString().slice(0, 16);
+            
         }
     }
 });

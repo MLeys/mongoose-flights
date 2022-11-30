@@ -30,24 +30,30 @@ function create(req, res) {
 }
 
 function index(req, res) {
-    Flight.find({}, function(err, flightDocs){
+    Flight.find({}, function(err, flightDoc){
 
-        console.log(flightDocs)
+        console.log(flightDoc)
 
-        res.render('flights/index', {flights: flightDocs}); 
+        res.render('flights/index', {flights: flightDoc}); 
         // injecting the movies variable to use in pages ejs file
     })
 }
 
 function newFlight(req, res) {
-    // const newFlight = new Flight();
-    // // Obtain the default date
-    // const dt = newFlight.departs;
-    // // Format the date for the value attribute of the input
+    Flight.find({}, function(err, flightDoc){
+        console.log(flightDoc, ' <======== FLIGHTDOC')
+        
+        const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+        console.log(defaultDate, '<------------------------------------------------DEFAULT DATE')
+        const date = defaultDate.toISOString().slice(0, 16);
+        console.log(date, '===================== NEW DATE in FORMAT')
+        res.render('flights/new', {departDefault: date, flights: flightDoc});
+        // res.render('flights/new', {flights: flightDoc});
+    })
+    // Obtain the default date
+    
+    // Format the date for the value attribute of the input
     // const departsDate = dt.toISOString().slice(0, 16);
-    // res.render('flights/new', {departsDate});
-    // Flight.findById(req.params.id, )
-
-
-    res.render('flights/new');
+    // res.render('flights/new', {departDefault: departsDate});
+    
 }
