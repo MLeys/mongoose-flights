@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const flightSchema = new Schema({
     airline: {
         type: String,
-        default: 'n/a',
         enum: ['American', 'Delta', 'Southwest', 'United']
     },
     airport: {
@@ -15,12 +14,16 @@ const flightSchema = new Schema({
     },
     flightNo: {
         type: Number,
-        default: 00,
-                
+        min: 10,
+        max: 9999,    
     },
     departs: {
         type: Date,
-        default: '',
+        default: function() {
+            const today = new Date();
+            Date.setFullYear(date.getFullYear() + 1);
+            return date;
+        },
     }
 
 });
