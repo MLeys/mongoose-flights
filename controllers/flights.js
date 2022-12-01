@@ -8,14 +8,38 @@ module.exports = {
     show
 }
 
-function show(res, req) {
-    Flight.findById(req.params.id, function(err, flight){
-        console.log(req.params.id, '======================== ID  ==********************');
-        res.redirect('flights/show', {title: 'Flight Information',  flight})
+function show(req, res) {
+    console.log(req.params.id, ' <---- req id!');
+    Flight.findById(req.params.id, function(err, flight) {;
+        console.log('==========================================')
+        console.log(flight.id);
+        console.log('==========================================');
+        res.render('flights/show', {flight: flight}) 
+    })}
+
+
+	// Flight.findById(req.params.id, function(err, flight) {
+    //   console.log(flight, ' <----- FLIGHT VARIABLE');
+	//   console.log('==========================================')
+	//   console.log(req.params.id, ' <-------- req.params.id')
+	   //{ title: 'flight Detail', flight });
+  
+
+
+function index(req, res) {
+    Flight.find({}, function(err, flightDoc){
+
+        // console.log(flightDoc)
+
+        res.render('flights/index', {flights: flightDoc}); 
+        // injecting the movies variable to use in pages ejs file
     })
 }
 
+
 function create(req, res) {
+
+    
 
     Flight.create(req.body, function(err, flightDoc){
 
@@ -38,15 +62,6 @@ function create(req, res) {
     
 }
 
-function index(req, res) {
-    Flight.find({}, function(err, flightDoc){
-
-        // console.log(flightDoc)
-
-        res.render('flights/index', {flights: flightDoc}); 
-        // injecting the movies variable to use in pages ejs file
-    })
-}
 
 function newFlight(req, res) {
     Flight.find({}, function(err, flightDoc){

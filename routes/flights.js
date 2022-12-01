@@ -1,6 +1,8 @@
 var express = require('express');
+const { route } = require('.');
 var router = express.Router();
 const flightCtrl = require('../controllers/flights')
+
 
 /* GET users listing. */
 router.get('/new', flightCtrl.new);
