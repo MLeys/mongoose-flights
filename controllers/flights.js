@@ -12,9 +12,9 @@ function show(req, res) {
     console.log(req.params.id, ' <---- req id!');
     Flight.findById(req.params.id, function(err, flight) {;
         console.log('==========================================')
-        console.log(flight.id);
+        console.log(flight);
         console.log('==========================================');
-        res.render('flights/show', {flight: flight}) 
+        res.render('flights/show', {title: 'Flight Information', flight }) 
     })}
 
 
@@ -47,8 +47,13 @@ function create(req, res) {
             console.log(err);
         }
         // console.log(flightDoc);
+        console.log('*******************************************************')
+        console.log('*******************************************************')
+        console.log(flightDoc);
+        console.log('*******************************************************')
+        console.log('*******************************************************')
 
-        res.redirect('/flights');
+        res.redirect('/');
     })
     // console.log(req.body, ' <---------------------------')
     // const newFlight = new Flight();
