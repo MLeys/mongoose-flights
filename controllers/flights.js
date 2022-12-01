@@ -27,9 +27,16 @@ function show(req, res) {
 
 
 function index(req, res) {
-    Flight.find({}, function(err, flightDoc){
+    // let FlightSorted = [];
+    // for (let arrivalTime in Flight) {
+    //     FlightSorted.push([arrivalTime, Flight[]])
+    // }
 
-        // console.log(flightDoc)
+    Flight.find({}, function(err, flightDoc){
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+         console.log(flightDoc)
+         console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+         console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
 
         res.render('flights/index', {flights: flightDoc}); 
         // injecting the movies variable to use in pages ejs file
@@ -69,7 +76,9 @@ function create(req, res) {
 
 
 function newFlight(req, res) {
+    
     Flight.find({}, function(err, flightDoc){
+        // const flight3 = flightDoc.
         console.log(flightDoc, ' <======== FLIGHTDOC')
         
         const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
