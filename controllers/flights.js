@@ -1,9 +1,18 @@
 const Flight = require('../models/flight');
 
+
 module.exports = {
     index,
     new: newFlight,
-    create
+    create,
+    show
+}
+
+function show(res, req) {
+    Flight.findById(req.params.id, function(err, flight){
+        console.log(req.params.id, '======================== ID  ==********************');
+        res.redirect('flights/show', {title: 'Flight Information',  flight})
+    })
 }
 
 function create(req, res) {
@@ -13,7 +22,7 @@ function create(req, res) {
         if (err) {
             console.log(err);
         }
-        console.log(flightDoc);
+        // console.log(flightDoc);
 
         res.redirect('/flights');
     })
@@ -32,7 +41,7 @@ function create(req, res) {
 function index(req, res) {
     Flight.find({}, function(err, flightDoc){
 
-        console.log(flightDoc)
+        // console.log(flightDoc)
 
         res.render('flights/index', {flights: flightDoc}); 
         // injecting the movies variable to use in pages ejs file
