@@ -13,12 +13,12 @@ function newTicket(req, res) {
     console.log(req.params.id, ' <---- req id!');
     Flight.findById(req.params.id, function(err, flight) {
         Ticket.find({flight: flight._id}, function(err, tickets) {
-            console.log('==========================================')
-            console.log(flight, ' <-----------------***** flight *****--------------->');
-            console.log('==========================================');
-            console.log('==========================================')
-            console.log(tickets, ' <-----------------***** tickets *****--------------->');
-            console.log('==========================================');
+            // console.log('==========================================')
+            // console.log(flight, ' <-----------------***** flight *****--------------->');
+            // console.log('==========================================');
+            // console.log('==========================================')
+            // console.log(tickets, ' <-----------------***** tickets *****--------------->');
+            // console.log('==========================================');
             res.render('flights/:id/tickets/new', {title: 'Flight Information', flight , tickets }) 
         }); // end of Ticket.Find
     }); // end of FLight.findID
@@ -32,12 +32,12 @@ function show(req, res) {
     console.log(req.params.id, ' <---- req id!');
     Flight.findById(req.params.id, function(err, flight) {
         Ticket.find({flight: flight._id}, function(err, tickets) {
-            console.log('==========================================')
-            console.log(flight, ' <-----------------***** flight *****--------------->');
-            console.log('==========================================');
-            console.log('==========================================')
-            console.log(tickets, ' <-----------------***** tickets *****--------------->');
-            console.log('==========================================');
+            // console.log('==========================================')
+            // console.log(flight, ' <-----------------***** flight *****--------------->');
+            // console.log('==========================================');
+            // console.log('==========================================')
+             console.log(tickets, ' <-----------------***** tickets *****--------------->');
+            // console.log('==========================================');
             res.render('flights/show', {title: 'Flight Information', flight , tickets }) 
         }); // end of Ticket.Find
     }); // end of FLight.findID
@@ -52,36 +52,51 @@ function index(req, res) {
     // }
 
     Flight.find({}, function(err, flightDoc){
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-         console.log(flightDoc)
-         console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-         console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        //  console.log(flightDoc)
+        //  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+        //  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
 
         res.render('flights/index', {flights: flightDoc}); 
         // injecting the movies variable to use in pages ejs file
     })
 }
 
+// async function create(req, res) {
+// try {
+//     const flightDoc = await Flight.find(req.params.id);
 
-function create(req, res) {
+//     res.redirect(`/flights/${flightDoc._id}`);
 
+// } catch(err) {
+//     console.log(err)
+//     res.send(' ERORRODAS:LKDFJASD: KSAD:K ')
+// }
     
 
-    Flight.create(req.body, function(err, flightDoc){
-        
+// }
 
-        if (err) {
-            console.log(err);
-        }
-        // console.log(flightDoc);
-        console.log('*******************************************************')
-        console.log('*******************************************************')
-        console.log(flightDoc);
-        console.log('*******************************************************')
-        console.log('*******************************************************')
 
-        res.redirect('/');
+function create(req, res) {
+    let newFlight = new Flight(req.body);
+    newFlight.save(function() {
+        console.log('Flight WAS SAVED')
+
     })
+    Flight.findById(newFlight._id).then(function () {
+        console.log(newFlight, ' =========== NEW FLIGHT')
+        res.redirect('/');
+        // res.redirect(`/flights/${newFlight._id}`);  
+      })
+    // Flight.create(req.body, function(err, flightDoc){
+    //     console.log(req.body, ' OUTR BODYFASDJKS')
+
+    //     if (err) {
+    //         console.log(err);
+    //     }
+
+    //     res.redirect('/');
+    // })
     // console.log(req.body, ' <---------------------------')
     // const newFlight = new Flight();
     // // Obtain the default date
