@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+
+<h2>Add Ticket</h2>
+
+<p>Please first ensure that the Flight is not in the dropdown
+    <select>
+      <% tickets.forEach(function(t) { %>
+        <option><%= t.seat %></option>
+      <% }) %>
+    </select>
+  </p>
+  <form id="add-performer-form" action="/flights" method="POST">
+    <label>Seat:</label>
+    <input type="text" name="seat">
+    <label>Price:</label>
+    <input type="Number" name="price">
+    <label>Flight:</label>
+    <input type="objectID"
+    <input type="submit" value="Add Performer">
+  </form>
+  
+
+
+<%- include('../partials/footer') %>

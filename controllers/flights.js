@@ -6,8 +6,27 @@ module.exports = {
     index,
     new: newFlight,
     create,
-    show
+    show,
 }
+
+function newTicket(req, res) {
+    console.log(req.params.id, ' <---- req id!');
+    Flight.findById(req.params.id, function(err, flight) {
+        Ticket.find({flight: flight._id}, function(err, tickets) {
+            console.log('==========================================')
+            console.log(flight, ' <-----------------***** flight *****--------------->');
+            console.log('==========================================');
+            console.log('==========================================')
+            console.log(tickets, ' <-----------------***** tickets *****--------------->');
+            console.log('==========================================');
+            res.render('flights/:id/tickets/new', {title: 'Flight Information', flight , tickets }) 
+        }); // end of Ticket.Find
+    }); // end of FLight.findID
+}; // end of function - show
+    
+//     res.render('/flights/:id/tickets/new')
+// }
+
 
 function show(req, res) {
     console.log(req.params.id, ' <---- req id!');
@@ -49,6 +68,7 @@ function create(req, res) {
     
 
     Flight.create(req.body, function(err, flightDoc){
+        
 
         if (err) {
             console.log(err);
