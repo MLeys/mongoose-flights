@@ -11,32 +11,66 @@
     <div><%= flight.flightNo %></div>
     <div>Time of Departure: </div>
     <div><%= flight.departs %></div>
-  <div>
-    <% if (flight.destinations.length) { %>
+    </section>
+
+    <div><h2>Destinations</h2></div>
+    <section>
+        
       <table>
-        <thead>
         <tr>
-          <th>Destination</th>
-          <th>Arrival Time</th>
-          
+          <td></td>
+          <td><small>Airport:</small></td>
+          <td><small>Arrival Time:</small></td>
         </tr>
-        </thead>
-        <tbody>
-        <% flight.destinations.forEach(function(d) { %>
+      
+      <% if (flight.destinations.length) { %>
+        <% flight.destinations.forEach(d => { %>
           <tr>
-          <td><%= d.airport %></td>
-          <td><%= d.arrival %></td>
-          </tr>
-        <% }); %>
-        </tbody>
-      </table>
-      <% } else { %>
+            <td></td>
+            <td>
+              <%= d.airport %> 
+            </td>
+            <td>
+              <% if (d.arrival) { %>
+               <%= d.arrival %> 
+              <% } else { %>
+                Not Available
+              <% }; %> 
+            </td></tr>
+    <% }) %>
+
+      <% } else  { %>
       <h5>No Desinations</h5>
       <% } %>
-  </div>
+      </ul>
+      </table>
+</section>
 
-  </section>
-    
+<div><h2>Tickets</h2></div>
+<a class="button" href="/flights/new">Buy Tickets</a>  
+<section>
+  <table>
+
+  <% if (tickets.length) { %>
+      <tr>
+        <td><small>seat coupon</small></td>
+        <td><small>ticketmaster</small></td>
+        <td><small>chair pass</small></td>
+      </tr>
+    <% tickets.forEach(t => { %>
+      <tr>
+        <td> <% t.seat %> </td>
+        <td> <% t.price %> </td>
+        <td> <% t.flight %> </td>
+      </tr>
+  </table>
+</section>
+      <% }) %>
+  
+  <% } else  { %>
+      <h4>----------------====== NO TICKETS ======----------------</h4>    
+    <% } %>
+
   <br><br><h2>Add Destination</h2>
   <form id="add-review-form" method="POST"
     action="/flights/<%= flight._id %>/destinations">
@@ -55,8 +89,6 @@
     </label><br>
     <input type="submit" value="Add Destination">
   </form>
-  
-
 
 
 <%- include('../partials/footer') %>

@@ -1,8 +1,39 @@
 <%- include('../partials/header') %>
 
 
-	<h2>Add New Flight</h2>
-	<form action="/flights" method="POST">
+<h2>Add New Flight</h2>
+<form action="/flights" method="POST">
+    <label>Airline:
+        <select name="airline">
+            <option value="American">American</option>
+            <option value="Delta">Delta</option>
+            <option value="Southwest">Southwest</option>
+            <option value="United">United</option>
+        </select>
+    </label><br>
+    <label>Airport:
+        <select name="airport">
+            <option value="ATL">ATL</option>
+            <option value="DFW">DFW</option>
+            <option value="DEN">DEN</option>
+            <option value="LAX">LAX</option>
+            <option value="SAN">SAN</option>
+        </select>
+    </label><br>
+    <label>Flight #:
+        <input type="Number" name="flightNo">
+    </label><br>
+    <label>Departure Date
+        <input type="datetime-local" name="departs" value="<% flights.departs %> ">
+    </label>
+
+    <input type="submit" value="Add Flight">
+</form>
+
+<br>
+
+<h2>Buy Ticket</h2>
+<form id="add-per-to-cast" action="/flights/<%= flight._id %>/" method="POST">
 		<label>Airline:
 			<select name="airline">
                 <option value="American">American</option>
@@ -29,5 +60,9 @@
 
 		<input type="submit" value="Add Flight">
 	</form>
+
+
+
+
 
     <%- include('../partials/footer') %>
