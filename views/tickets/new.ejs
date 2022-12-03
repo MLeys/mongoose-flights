@@ -9,7 +9,9 @@
     <label>Price:</label>
     <input type="Number" name="price">
     <label>Flight:</label>
-    <input type="objectID" name="flight" value="<%= flight._id %>">
+    
+    <input type="hidden" name="flight" value="<% flight %> ">
+    
     <input type="submit" value="Add Ticket">
   </form>
   
