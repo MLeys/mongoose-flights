@@ -5,12 +5,59 @@ const Ticket = require('../models/ticket');
 module.exports = {
     create,
     new: newTicket,
-    // addTicket,
+    addTicket,
     // show
 };
+// async addToCast
+async function addTicket(req, res){
+    try {
+      // Find the movie that I want to add the performer too
+      const flightDoc = await Flight.findById(req.params.id); // talking to the database
+  
+      // add the performer id to the flightDoc.cast array
+      flightDoc.cast.push(req.body.performerId);
+  
+      await flightDoc.save(); // talking to the database
+  
+      // after we save, respond to the client with the redirect
+      res.redirect(`/flights/${flightDoc._id}`)
+      
+    }catch(err){
+      console.log(err)
+      res.send('check terminal ---- ADD TICKET ERROR')
+    }
+  }
 
-function newTicket(req, res) {
-    res.render('tickets/new');
+  async function newTicket(req, res){
+    try {
+      // Find the movie that I want to add the performer too
+      const flightDoc = await Flight.findById(req.params.id); // talking to the database
+
+        console.log(flightDoc, ' <======== FLIGHTDOC')
+        
+        const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+        console.log(defaultDate, '<------------------------------------------------DEFAULT DATE')
+        const date = defaultDate.toISOString().slice(0, 16);
+        console.log(date, '===================== NEW DATE in FORMAT')
+        res.render('tickets/new', {departDefault: date, flight: flightDoc});
+    }catch(err){
+      console.log(err)
+      res.send('check terminal ---- **NEW** TICKET ERROR')
+    }
+  }
+
+// function newTicket(req, res) {
+//     Flight.find({}, function(err, flightDoc){
+//         // const flight3 = flightDoc.
+//         console.log(flightDoc, ' <======== FLIGHTDOC')
+        
+//         const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+//         console.log(defaultDate, '<------------------------------------------------DEFAULT DATE')
+//         const date = defaultDate.toISOString().slice(0, 16);
+//         console.log(date, '===================== NEW DATE in FORMAT')
+//         res.render('tickets/new', {departDefault: date, flight: flightDoc});
+
+    
 
     // try {
 
@@ -21,23 +68,41 @@ function newTicket(req, res) {
     //     console.log(err);
     //     res.send('ERROR in tickets.newTicket *************')
     // }
-}
+// }
+//     )}
 
-function create(req, res) {
 
+
+async function create(req, res) {
+    try {
+        const flightDoc = await Flight.findById(req.params.id);
         let newTicket = new Ticket(req.body);
         newTicket.save(function() {
             console.log('TICKET WAS SAVED')
-
+            Ticket.findById(newTicket._id).populate('flight').then(function () {
+                console.log(newTicket, '=============== NEW TICKET')
+                res.redirect(`/flights/${flightDoc._id}`)
+              })
         })
-        Ticket.findById(newTicket._id).populate('flight').then(function () {
-            console.log(newTicket, '=============== NEW TICKET')
-            res.redirect('/flights')  
-          })
+
+    } catch(err) {
+        console.log(err)
+        res.send(' CHECK TERMINAL ---- ticket -> create ERROR')
+    }
+}
+        // let newTicket = new Ticket(req.body);
+        // newTicket.save(function() {
+        //     console.log('TICKET WAS SAVED')
+
+        // })
+        // Ticket.findById(newTicket._id).populate('flight').then(function () {
+        //     console.log(newTicket, '=============== NEW TICKET')
+        //     res.redirect(`/flights/${flightDoc._id}`)
+        //   })
         // const flightDoc = await Flight.find(req.params.id);
 
         // res.redirect(`/flights/${flightDoc._id}`);
-}
+//}
 
 
 // function create(req, res) {

@@ -54,9 +54,9 @@
 
   <% if (tickets.length) { %>
       <tr>
-        <td><small>seat coupon</small></td>
-        <td><small>ticketmaster</small></td>
-        <td><small>chair pass</small></td>
+        <td>seat coupon</td>
+        <td>ticketmaster</td>
+        <td>Flight</td>
       </tr>
     <% tickets.forEach(t => { %>
       <tr>
@@ -64,10 +64,9 @@
         <td> <%= t.price %> </td>
         <td> <%= t.flight %> </td>
       </tr>
-  </table>
-</section>
       <% }) %>
-  
+    </table>
+  </section>
   <% } else  { %>
       <h4>----------------====== NO TICKETS ======----------------</h4>    
     <% } %>

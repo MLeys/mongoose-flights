@@ -28,22 +28,34 @@ function newTicket(req, res) {
 // }
 
 
-function show(req, res) {
-    console.log(req.params.id, ' <---- req id!');
-    Flight.findById(req.params.id, function(err, flight) {
-        Ticket.find({flight: flight._id}, function(err, tickets) {
-            // console.log('==========================================')
-            // console.log(flight, ' <-----------------***** flight *****--------------->');
-            // console.log('==========================================');
-            // console.log('==========================================')
-             console.log(tickets, ' <-----------------***** tickets *****--------------->');
-            // console.log('==========================================');
-            res.render('flights/show', {title: 'Flight Information', flight , tickets }) 
-        }); // end of Ticket.Find
-    }); // end of FLight.findID
-}; // end of function - show
+// function show(req, res) {
+//     console.log(req.params.id, ' <---- req id!');
+//     Flight.findById(req.params.id, function(err, flight) {
+//         Ticket.find({flight: flight._id}, function(err, tickets) {
+//             // console.log('==========================================')
+//             // console.log(flight, ' <-----------------***** flight *****--------------->');
+//             // console.log('==========================================');
+//             // console.log('==========================================')
+//              console.log(tickets, ' <-----------------***** tickets *****--------------->');
+//             // console.log('==========================================');
+//             res.render('flights/show', {title: 'Flight Information', flight , tickets }) 
+//         }); // end of Ticket.Find
+//     }); // end of FLight.findID
+// }; // end of function - show
 
+async function show(req, res) {
+    try {
+        // let newTicket = new Ticket(req.body);
+        const flightDoc = await Flight.findById(req.params.id);
+        const ticketsDoc = await Ticket.find();
+        res.render('flights/show', {title: 'Flight Information', flight: flightDoc , tickets: ticketsDoc })
+        
 
+    } catch(err) {
+        console.log(err);
+        res.send('CHECK TERMINAL for flights --> show controller ERROR')
+    }
+}
 
 function index(req, res) {
     // let FlightSorted = [];
