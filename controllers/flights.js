@@ -46,9 +46,17 @@ function newTicket(req, res) {
 async function show(req, res) {
     try {
         // let newTicket = new Ticket(req.body);
+        
         const flightDoc = await Flight.findById(req.params.id);
-        const ticketsDoc = await Ticket.find();
-        res.render('flights/show', {title: 'Flight Information', flight: flightDoc , tickets: ticketsDoc })
+        // const ticketsDoc = await Ticket.find();
+
+        // ^^const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
+        const ticketsDocs = await Ticket.find({ _id: { $in: flightDoc.id } });
+
+        res.render('flights/show', {
+            title: 'Flight Information', 
+            flight: flightDoc , 
+            tickets: ticketsDocs})
         
 
     } catch(err) {

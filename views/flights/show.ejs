@@ -58,11 +58,11 @@
         <td>ticketmaster</td>
         <td>Flight</td>
       </tr>
-    <% tickets.forEach(t => { %>
+    <% tickets.forEach(ticket => { %>
       <tr>
-        <td> <%= t.seat %> </td>
-        <td> <%= t.price %> </td>
-        <td> <%= t.flight %> </td>
+        <td> <%= ticket.seat %> </td>
+        <td> <%= ticket.price %> </td>
+        <td> <%= ticket.flight %> </td>
       </tr>
       <% }) %>
     </table>

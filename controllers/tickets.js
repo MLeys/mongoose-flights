@@ -5,46 +5,97 @@ const Ticket = require('../models/ticket');
 module.exports = {
     create,
     new: newTicket,
-    addTicket,
-    // show
+    // addTicket,
+    show
 };
-// async addToCast
-async function addTicket(req, res){
-    try {
-      // Find the movie that I want to add the performer too
-      const flightDoc = await Flight.findById(req.params.id); // talking to the database
-  
-      // add the performer id to the flightDoc.cast array
-      flightDoc.cast.push(req.body.performerId);
-  
-      await flightDoc.save(); // talking to the database
-  
-      // after we save, respond to the client with the redirect
-      res.redirect(`/flights/${flightDoc._id}`)
-      
-    }catch(err){
-      console.log(err)
-      res.send('check terminal ---- ADD TICKET ERROR')
-    }
-  }
 
-  async function newTicket(req, res){
+
+async function newTicket(req, res){
     try {
+        console.log(req.body, '&&&&&&&&&&&&&&&&&&&&&&&&&&& Req.BODY')
       // Find the movie that I want to add the performer too
       const flightDoc = await Flight.findById(req.params.id); // talking to the database
 
         console.log(flightDoc, ' <======== FLIGHTDOC')
-        
-        const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-        console.log(defaultDate, '<------------------------------------------------DEFAULT DATE')
-        const date = defaultDate.toISOString().slice(0, 16);
-        console.log(date, '===================== NEW DATE in FORMAT')
-        res.render('tickets/new', {departDefault: date, flight: flightDoc});
+
+        res.render('tickets/new', {flight: flightDoc});
     }catch(err){
       console.log(err)
       res.send('check terminal ---- **NEW** TICKET ERROR')
     }
   }
+
+
+async function create(req, res) {
+    try {
+        const ticketDoc = await Ticket.findById(req.params.id).populate("flight").exec();
+        // const newTicket = await Ticket.create(req.body).populate("flight").exec();
+
+        const flightDoc = await Flight.findById(req.params.id);
+        let newTicket = new Ticket(req.body);
+        console.log()
+        newTicket.save(function() {
+            console.log('TICKET WAS SAVED')
+            Ticket.findById(newTicket._id).populate('flight').then(function () {
+                console.log(newTicket, '=============== NEW TICKET')
+                res.redirect(`/flights/${flightDoc._id}`)
+              })
+        })
+
+    } catch(err) {
+        console.log(err)
+        res.send(' CHECK TERMINAL ---- ticket -> create ERROR')
+    }
+}
+
+async function show(req, res) {
+    try {
+      // Find the movie, and replace the performer id's in the cast array with the performer docs
+      // aka populate the cast array
+    //    const flightDoc = await Flight.findById(req.params.id);
+      // after we find the movieDoc
+      // then we want to find all the performers in our database that are not in the movieDoc.cast array
+      // They're not in the movie.
+      const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
+      const ticketsDocs = await Ticket.find({ _id });
+    //   const performersDocs = await Performer.find({ _id: { $nin: movieDoc.cast }});
+    //   then respond to the client with our show page
+    res.render('flights/show', {
+         
+        
+        tickets: ticketsDocs, 
+        ticket: ticketDoc, 
+    })
+  
+    } catch (err) {
+      console.log(err);
+      res.send("error, check terminal");
+    }
+  }
+
+// ======================================================================================
+
+// async addTicket
+// async function addTicket(req, res){
+//     try {
+//       // Find the movie that I want to add the performer too
+//       const flightDoc = await Flight.findById(req.params.id); // talking to the database
+  
+//       // add the performer id to the flightDoc.cast array
+//       flightDoc.cast.push(req.body.performerId);
+  
+//       await flightDoc.save(); // talking to the database
+  
+//       // after we save, respond to the client with the redirect
+//       res.redirect(`/flights/${flightDoc._id}`)
+      
+//     }catch(err){
+//       console.log(err)
+//       res.send('check terminal ---- ADD TICKET ERROR')
+//     }
+//   }
+
+
 
 // function newTicket(req, res) {
 //     Flight.find({}, function(err, flightDoc){
@@ -73,23 +124,7 @@ async function addTicket(req, res){
 
 
 
-async function create(req, res) {
-    try {
-        const flightDoc = await Flight.findById(req.params.id);
-        let newTicket = new Ticket(req.body);
-        newTicket.save(function() {
-            console.log('TICKET WAS SAVED')
-            Ticket.findById(newTicket._id).populate('flight').then(function () {
-                console.log(newTicket, '=============== NEW TICKET')
-                res.redirect(`/flights/${flightDoc._id}`)
-              })
-        })
 
-    } catch(err) {
-        console.log(err)
-        res.send(' CHECK TERMINAL ---- ticket -> create ERROR')
-    }
-}
         // let newTicket = new Ticket(req.body);
         // newTicket.save(function() {
         //     console.log('TICKET WAS SAVED')
