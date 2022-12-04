@@ -39,12 +39,39 @@ async function newTicket(req, res){
     try {
         const flightDoc = await Flight.findById(req.params.id);
 
+        const seatOptionsExpression = new RegExp('/[A-F][1-9]\d?/');
+        // const seatOptionsArray = [...seatOptionsExpression]
         // const ticketsDocs = await Ticket.find({ _id })
-
+        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+        console.log(' ----- ', seatOptionsExpression)
       // Find the movie that I want to add the performer too
-      const tickets = await Ticket.find({});
+      const tickets = await Ticket.find({}).exec();
 
-        res.render('tickets/new', {tickets, flight: flightDoc});
+      // CREATE NEW TICKET HERE?
+      const seatLetters = ['A', 'B', 'C', 'D', 'E', 'F']
+      const seatNumbers = [];
+      const seatOptions = [];
+      for (let i = 1; i <=99 ; i++) {
+        seatNumbers.push(i);
+      }
+      let seat;
+      console.log(seatNumbers, ' <---- Seat NUMBERS')
+      for (let l = 0; l < seatLetters.length; l++) {
+        for (let n = 0; n < seatNumbers.length; n++) {
+            seat = (`${seatLetters[l]}${seatNumbers[n]}`);
+            seatOptions.push(seat)
+        }
+      }
+      console.log(seatOptions, ' <----- seat OPTIONS');
+
+
+        res.render('tickets/new', {
+            tickets, 
+            flight: flightDoc,
+            seatLetters,
+            seatNumbers,
+            seatOptions
+        });
     }catch(err){
       console.log(err)
       res.send('check terminal ---- **NEW** TICKET ERROR')

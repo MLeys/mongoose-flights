@@ -4,15 +4,19 @@
 <h2>Add Ticket</h2>
 
   <form id="add-review-form" method="POST" action="/flights/<%= flight._id %>/tickets ">
-    <label>Seat:</label>
-    <input type="text" name="seat">
-    <label>Price:</label>
+    <label>Seat:</label><br>
+    <select name="seat">
+      <%- seatOptions.map(s=>
+        `<option value="${s}">${s}</option>`
+        ).join('') %>
+    </select>
+    <br>
+    <label> Price: </label>
+
     <input type="Number" name="price">
-    <label>Flight:</label>
-    
-    <input type="hidden" name="flight" value="<% flight %> ">
-    
+   
     <input type="submit" value="Add Ticket">
+    <input type="hidden" name="flight" value="<% flight %> ">
   </form>
   
 
