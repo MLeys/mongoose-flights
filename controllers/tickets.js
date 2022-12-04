@@ -6,13 +6,39 @@ module.exports = {
     create,
     new: newTicket,
     // addTicket,
-    show
+    // show,
+    delete: deleteTicket
 };
 
+async function deleteTicket(req, res) {
+    try {
+        // const flightDoc = await Flight.findById(req.params.id);
+        const ticketDoc = await Ticket.findById(req.params.id).exec();
+        const ticketDocId = ticketDoc.id;
+        const flightDoc = await Flight.findById(ticketDoc.flight).exec();
+        const flightDocId = flightDoc._id;
+        await Ticket.deleteOne({ _id: ticketDoc._id})
+        
+        console.log('______________________________________________');
+        console.log( ticketDoc, '<--- ticketDoc');
+        console.log( ticketDocId, '<--- ticketDocId');
+        console.log( flightDoc, '<--- flightDoc');
+        console.log( flightDocId, '<--- flightDocId');
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+        
+        
+        // Ticket.deleteOne(req.params.id);
+        res.redirect('/flights')
+    } catch(err) {
+        console.log(err);
+        res.send(' <=== TERMINAL ERROR ====== Check ticketCtrl - del')
+    }
+}
 
 async function newTicket(req, res){
     try {
         const flightDoc = await Flight.findById(req.params.id);
+
         // const ticketsDocs = await Ticket.find({ _id })
 
       // Find the movie that I want to add the performer too
@@ -29,15 +55,15 @@ async function newTicket(req, res){
 async function create(req, res) {
     try {
 
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-        console.log(req.body, ' <--- req body in tickets ctrl')
-        console.log('------------------------------------------------');      
-        console.log(req.body.id, ' <----- req.body.id');
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-        console.log(req.params, ' <---- req Params in tickets ctrl')
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-        console.log(req.params.id, ' <----- req.params.id');
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+        // console.log(req.body, ' <--- req body in tickets ctrl')
+        // console.log('------------------------------------------------');      
+        // console.log(req.body.id, ' <----- req.body.id');
+        // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+        // console.log(req.params, ' <---- req Params in tickets ctrl')
+        // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+        // console.log(req.params.id, ' <----- req.params.id');
+        // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
         
         const flightDoc = await Flight.findById(req.params.id);
         req.body.flight = flightDoc._id;
@@ -78,23 +104,23 @@ async function create(req, res) {
     }
 }
 
-async function show(req, res) {
-    try {
-        console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ SHOW')
+// async function show(req, res) {
+//     try {
+//         console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ SHOW')
 
-        // c
-        // const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
-        // console.log(ticketDoc, ' <----- ticketDoc == DOC') // NOTHING
+//         // c
+//         // const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
+//         // console.log(ticketDoc, ' <----- ticketDoc == DOC') // NOTHING
 
-        res.render('flights/show', {
-            // ticket: ticketDoc, 
-        })
+//         res.render('flights/show', {
+//             // ticket: ticketDoc, 
+//         })
   
-    } catch (err) {
-      console.log(err);
-      res.send("error, check terminal");
-    }
-  }
+//     } catch (err) {
+//       console.log(err);
+//       res.send("error, check terminal");
+//     }
+//   }
 
 // ======================================================================================
 

@@ -51,6 +51,7 @@
       <tr>
         <th>Seat</th>
         <th>Price</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -64,6 +65,12 @@
               </td>
               <td>
                 <%= ticket.price %>
+              </td>
+              <td>
+                <form action="/flights/<%= flight._id %>/tickets/<%= ticket.id %>?_method=DELETE"
+                  class="delete-form" method="POST">
+                  <button type="submit">X</button>
+                </form>  
               </td>
             </tr>
             <% } %> 
