@@ -10,5 +10,6 @@ router.get('/flights/:id/tickets/new', ticketsCtrl.new); //same as new movie
 router.post('/flights/:id', ticketsCtrl.create);
 // router.post('/flights/:id/tickets', ticketsCtrl.addTicket);
 router.get('/flights/:id', ticketsCtrl.show);
+// router.delete('/flights/:id/tickets/:id', ticketsCtrl.delete);
 
 module.exports = router;

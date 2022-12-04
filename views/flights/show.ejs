@@ -13,20 +13,17 @@
     <div><%= flight.departs %></div>
     </section>
 
-    <div><h2>Destinations</h2></div>
-    <section>
-        
+    <h2>Destinations</h2>
       <table>
-        <tr>
-          <td></td>
-          <td><small>Airport:</small></td>
-          <td><small>Arrival Time:</small></td>
-        </tr>
-      
+        <thead>
+          <tr>
+            <th>Airport</th>
+            <th>Est Arrival</th>
+          </tr>
+        </thead>
       <% if (flight.destinations.length) { %>
         <% flight.destinations.forEach(d => { %>
           <tr>
-            <td></td>
             <td>
               <%= d.airport %> 
             </td>
@@ -54,21 +51,22 @@
       <tr>
         <th>Seat</th>
         <th>Price</th>
-        
       </tr>
     </thead>
     <tbody>
       <% let total=0 %>
         <% tickets.forEach(function(ticket) { %>
-              <% total ++ %>
-              <tr>
-                <td>
-                  <%= ticket.seat %>
-                </td>
-                <td>
-                  <%= ticket.price %>
-                </td>
-              </tr>
+          <% total ++ %>
+          <% if (ticket.flight = flight) { %> 
+            <tr>
+              <td>
+                <%= ticket.seat %>
+              </td>
+              <td>
+                <%= ticket.price %>
+              </td>
+            </tr>
+            <% } %> 
         <% }); %>
                 <tr>
                   <td colspan="2"> <strong>
