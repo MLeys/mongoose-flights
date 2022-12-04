@@ -12,17 +12,13 @@ module.exports = {
 
 async function newTicket(req, res){
     try {
-
+        const flightDoc = await Flight.findById(req.params.id);
         // const ticketsDocs = await Ticket.find({ _id })
 
       // Find the movie that I want to add the performer too
       const tickets = await Ticket.find({});
-      
-      const flightDoc = await Flight.findById(req.params.id); // talking to the database
 
-        console.log(flightDoc._id, ' <======== FLIGHTDOC -- ID') // this is the flight object
-
-        res.render('tickets/new', {flight: flightDoc, tickets});
+        res.render('tickets/new', {tickets, flight: flightDoc});
     }catch(err){
       console.log(err)
       res.send('check terminal ---- **NEW** TICKET ERROR')

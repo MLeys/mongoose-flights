@@ -9,39 +9,6 @@ module.exports = {
     show,
 }
 
-function newTicket(req, res) {
-    console.log(req.params.id, ' <---- req id!');
-    Flight.findById(req.params.id, function(err, flight) {
-        Ticket.find({flight: flight._id}, function(err, tickets) {
-            // console.log('==========================================')
-            // console.log(flight, ' <-----------------***** flight *****--------------->');
-            // console.log('==========================================');
-            // console.log('==========================================')
-            // console.log(tickets, ' <-----------------***** tickets *****--------------->');
-            // console.log('==========================================');
-            res.render('flights/:id/tickets/new', {title: 'Flight Information', flight , tickets }) 
-        }); // end of Ticket.Find
-    }); // end of FLight.findID
-}; // end of function - show
-    
-//     res.render('/flights/:id/tickets/new')
-// }
-
-
-// function show(req, res) {
-//     console.log(req.params.id, ' <---- req id!');
-//     Flight.findById(req.params.id, function(err, flight) {
-//         Ticket.find({flight: flight._id}, function(err, tickets) {
-//             // console.log('==========================================')
-//             // console.log(flight, ' <-----------------***** flight *****--------------->');
-//             // console.log('==========================================');
-//             // console.log('==========================================')
-//              console.log(tickets, ' <-----------------***** tickets *****--------------->');
-//             // console.log('==========================================');
-//             res.render('flights/show', {title: 'Flight Information', flight , tickets }) 
-//         }); // end of Ticket.Find
-//     }); // end of FLight.findID
-// }; // end of function - show
 
 async function show(req, res) {
     try {
@@ -49,7 +16,16 @@ async function show(req, res) {
 
         const flightDoc = await Flight.findById(req.params.id);
         // const ticketsDoc = await Ticket.find();
-        const ticketsDocs = await Ticket.find({});
+        const ticketsDocs = await Ticket.find({flight: flightDoc})
+        // let count = 0;
+        // ticketsDocs.forEach(function (ticket) {
+        //     count++
+            
+        //     console.log(ticket, ' ________________________ALL Tickets________________________________', count)
+            
+        //     console.log(ticket.flight, ' TICKET ID ___________________________________', count)
+        
+        // })
         // const tickets = await Ticket.find({ flight: { $in: flightDoc._id } });
 
         // ^^const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
