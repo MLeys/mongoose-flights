@@ -12,37 +12,13 @@ module.exports = {
 
 async function show(req, res) {
     try {
-        // let newTicket = new Ticket(req.body);
-
         const flightDoc = await Flight.findById(req.params.id);
-        // const ticketsDoc = await Ticket.find();
         const ticketsDocs = await Ticket.find({flight: flightDoc})
-        // let count = 0;
-        // ticketsDocs.forEach(function (ticket) {
-        //     count++
-            
-        //     console.log(ticket, ' ________________________ALL Tickets________________________________', count)
-            
-        //     console.log(ticket.flight, ' TICKET ID ___________________________________', count)
-        
-        // })
-        // const tickets = await Ticket.find({ flight: { $in: flightDoc._id } });
-
-        // ^^const ticketDoc = await Ticket.findById(req.params).populate("flight").exec();
-        // const ticketsDocs = await Ticket.find({ _id: { $in: flightDoc._id } });
-        
-        // console.log(' %%%%%%%%%%%%%%%%%%%%^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&')
-        // console.log(tickets, ' <-----======= .   ticketsDocs----------')
-        // console.log(' %%%%%%%%%%%%%%%%%%%%^^^^^^^^^^^^^^^^&&&&&&&&&&&&&&&&&&&')
- 
-
 
         res.render('flights/show', {
             title: 'Flight Information', 
             flight: flightDoc , 
             tickets: ticketsDocs})
-        
-
     } catch(err) {
         console.log(err);
         res.send('CHECK TERMINAL for flights --> show controller ERROR')
@@ -50,87 +26,26 @@ async function show(req, res) {
 }
 
 function index(req, res) {
-    // let FlightSorted = [];
-    // for (let arrivalTime in Flight) {
-    //     FlightSorted.push([arrivalTime, Flight[]])
-    // }
-
     Flight.find({}, function(err, flightDoc){
-        // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-        //  console.log(flightDoc)
-        //  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-        //  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-
         res.render('flights/index', {flights: flightDoc}); 
-        // injecting the movies variable to use in pages ejs file
     })
 }
 
-// async function create(req, res) {
-// try {
-//     const flightDoc = await Flight.find(req.params.id);
-
-//     res.redirect(`/flights/${flightDoc._id}`);
-
-// } catch(err) {
-//     console.log(err)
-//     res.send(' ERORRODAS:LKDFJASD: KSAD:K ')
-// }
-    
-
-// }
-
-
 function create(req, res) {
     let newFlight = new Flight(req.body);
-    newFlight.save(function() {
-        console.log('Flight WAS SAVED')
-
-    })
+    newFlight.save(function() {})
     Flight.findById(newFlight._id).then(function () {
-        console.log(newFlight, ' =========== NEW FLIGHT')
         res.redirect('/');
-        // res.redirect(`/flights/${newFlight._id}`);  
       })
-    // Flight.create(req.body, function(err, flightDoc){
-    //     console.log(req.body, ' OUTR BODYFASDJKS')
-
-    //     if (err) {
-    //         console.log(err);
-    //     }
-
-    //     res.redirect('/');
-    // })
-    // console.log(req.body, ' <---------------------------')
-    // const newFlight = new Flight();
-    // // Obtain the default date
-    // const dt = newFlight.departs;
-    // console.log(dt, " DT DFGFASDFDSFDSAASFDSSADSDFSA")
-    // // Format the date for the value attribute of the input
-    // const departsDate = dt.toISOString().slice(0, 16);
-    // console.log('==================================')
-    // console.log(departsDate);
-    
 }
 
 
 function newFlight(req, res) {
     
     Flight.find({}, function(err, flightDoc){
-        // const flight3 = flightDoc.
-        console.log(flightDoc, ' <======== FLIGHTDOC')
-        
         const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
-        console.log(defaultDate, '<------------------------------------------------DEFAULT DATE')
         const date = defaultDate.toISOString().slice(0, 16);
-        console.log(date, '===================== NEW DATE in FORMAT')
+
         res.render('flights/new', {departDefault: date, flights: flightDoc});
-        // res.render('flights/new', {flights: flightDoc});
     })
-    // Obtain the default date
-    
-    // Format the date for the value attribute of the input
-    // const departsDate = dt.toISOString().slice(0, 16);
-    // res.render('flights/new', {departDefault: departsDate});
-    
 }
