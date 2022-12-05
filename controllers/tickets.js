@@ -13,22 +13,22 @@ module.exports = {
 async function deleteTicket(req, res) {
     try {
         // const flightDoc = await Flight.findById(req.params.id);
-        const ticketDoc = await Ticket.findById(req.params.id).exec();
-        const ticketDocId = ticketDoc.id;
-        const flightDoc = await Flight.findById(ticketDoc.flight).exec();
-        const flightDocId = flightDoc._id;
-        await Ticket.deleteOne({ _id: ticketDoc._id})
+        const ticketDoc = await Ticket.findByIdAndDelete(req.params.id).exec();
+        // const ticketDocId = ticketDoc.id;
+        // const flightDoc = await Flight.findById(ticketDoc.flight).exec();
+        // const flightDocId = flightDoc._id;
+        // await Ticket.deleteOne({ _id: ticketDoc._id})
         
-        console.log('______________________________________________');
-        console.log( ticketDoc, '<--- ticketDoc');
-        console.log( ticketDocId, '<--- ticketDocId');
-        console.log( flightDoc, '<--- flightDoc');
-        console.log( flightDocId, '<--- flightDocId');
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
+        // console.log('______________________________________________');
+        // console.log( ticketDoc, '<--- ticketDoc');
+        // console.log( ticketDocId, '<--- ticketDocId');
+        // console.log( flightDoc, '<--- flightDoc');
+        // console.log( flightDocId, '<--- flightDocId');
+        // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
         
         
         // Ticket.deleteOne(req.params.id);
-        res.redirect('/flights')
+        res.redirect(`/flights/${ticketDoc.flight}`)
     } catch(err) {
         console.log(err);
         res.send(' <=== TERMINAL ERROR ====== Check ticketCtrl - del')
