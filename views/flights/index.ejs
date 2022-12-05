@@ -20,10 +20,16 @@
             <td><%= f.flightNo %></td>
             <td><%= f.departs %></td>
             <td><a href="/flights/<%= f._id %>">DETAILS</a></td>
+            <td>
+              <form action="/flights/<%= f._id %>?_method=DELETE"
+                class="delete-form" method="POST">
+                <button type="submit">DELETE</button>
+              </form>  
+
+            </td>
 
           </tr>
           <% }) %> 
-        <!-- Close the forEach using EJS here -->
       </tbody>
     </table>
     <%- include('../partials/footer') %>

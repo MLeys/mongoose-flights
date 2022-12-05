@@ -7,8 +7,19 @@ module.exports = {
     new: newFlight,
     create,
     show,
+    delete: deleteFlight
 }
 
+async function deleteFlight(req, res) {
+    try {
+        const flightDoc = await Flight.findByIdAndDelete(req.params.id);
+
+        res.redirect('/flights');
+    } catch(err) {
+        console.log(err)
+        console.log(' $$$$$$$$$$$$$$$$$$$$$  Check terminal <-- flights-deleteflight')
+    }
+}
 
 async function show(req, res) {
     try {
