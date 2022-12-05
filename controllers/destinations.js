@@ -10,7 +10,6 @@ function create(req, res) {
         if (err) {
             res.send(' ERROR from CREATING NEW DESTINATION')
         }
-        console.log('*************  CREATING DESTINATION ********************')
         flightDoc.destinations.push(req.body);
 
         flightDoc.save(function (err) {
