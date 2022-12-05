@@ -31,7 +31,6 @@ async function newTicket(req, res){
         seatNumbers.push(i);
       }
       let seat;
-      console.log(seatNumbers, ' <---- Seat NUMBERS')
       for (let l = 0; l < seatLetters.length; l++) {
         for (let n = 0; n < seatNumbers.length; n++) {
             seat = (`${seatLetters[l]}${seatNumbers[n]}`);

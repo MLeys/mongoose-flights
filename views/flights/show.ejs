@@ -21,8 +21,8 @@
             <th>Est Arrival</th>
           </tr>
         </thead>
-      <% if (flight.destinations.length) { %>
-        <% flight.destinations.forEach(d => { %>
+      <% if (destinations.length) { %>
+        <% destinations.forEach(d => { %>
           <tr>
             <td>
               <%= d.airport %> 
@@ -33,7 +33,9 @@
               <% } else { %>
                 Not Available
               <% }; %> 
-            </td></tr>
+            </td>
+
+          </tr>
     <% }) %>
 
       <% } else  { %>
