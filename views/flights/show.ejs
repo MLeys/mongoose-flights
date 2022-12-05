@@ -97,7 +97,7 @@
   <br><br><h2>Add Destination</h2>
   <form id="add-review-form" method="POST"
     action="/flights/<%= flight._id %>/destinations">
-    <label>Destinations:</label>
+    <label>Choose Airport Destination:
   
         <select name="airport">
             <option value="AUS">AUS</option>
@@ -106,11 +106,16 @@
             <option value="LAX">LAX</option>
             <option value="SAN">SAN</option>
         </select>
+    </label>
+    <br> 
     <label>Arrival Time:
       <input type="datetime-local" name="arrival" value="<% flight.arrival %>">
         
     </label><br>
-    <input type="submit" value="Add Destination">
+    <label>
+      <input type="submit" value="Add ">
+    </label>
+    
   </form>
 
 
